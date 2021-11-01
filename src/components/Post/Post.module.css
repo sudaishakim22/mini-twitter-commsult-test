@@ -1,0 +1,12 @@
+.post {
+  width: 100%;
+  display: flex;
+  border: 1px solid var(--twitter-background);
+  padding: 10px;
+}
+
+.post__body {
+  overflow-wrap: break-word;
+  margin-left: 10px;
+  flex: 1;
+}

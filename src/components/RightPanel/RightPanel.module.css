@@ -1,0 +1,35 @@
+.rightPanel {
+  flex: 0.3;
+  display: flex;
+  flex-direction: column;
+}
+
+.rightPanel__input {
+  display: flex;
+  align-items: center;
+  background-color: var(--twitter-background);
+  padding: 10px;
+  border-radius: 20px;
+  margin-top: 10px;
+  margin-left: 20px;
+}
+
+.rightPanel__input > input {
+  border: none;
+  background-color: var(--twitter-background);
+}
+
+.rightPanel__searchIcon {
+  color: gray;
+}
+
+.trendForYou {
+  display: flex;
+  background: #eff1f1;
+  flex-direction: column;
+  padding: 10px;
+  border: 0px solid black;
+  border-radius: 16px;
+  margin-top: 20px;
+  margin-left: 20px;
+}
