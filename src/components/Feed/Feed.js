@@ -9,9 +9,9 @@ import ModalEdit from "../ModalEdit/ModalEdit";
 import Button from "@mui/material/Button";
 import MenuIcon from "@mui/icons-material/Menu";
 import axios from "axios";
-import { getExploreTweet } from "../../redux/services";
+import { getExploreTweet, getSortTweet } from "../../redux/services";
 
-const Feed = ({ onClickLogout, onShowSidebar }) => {
+const Feed = ({ onClickLogout, onShowSidebar, searchData }) => {
   const dispatch = useDispatch();
   const { tweetListExplore } = useSelector((state) => state.tweetReducer);
   const [tweets, setTweets] = useState([]);
@@ -21,6 +21,7 @@ const Feed = ({ onClickLogout, onShowSidebar }) => {
   const [showMenuBar, setShowMenuBar] = useState(false);
 
   useEffect(() => {
+    console.log("trigger");
     const fetchTweets = async () => {
       const userLogin = JSON.parse(localStorage.getItem("userLogin"));
       setLoading(true);
@@ -32,10 +33,15 @@ const Feed = ({ onClickLogout, onShowSidebar }) => {
         setLoading(false);
       }
     };
-    fetchTweets();
+    if (searchData) {
+      filterData(searchData);
+    } else {
+      fetchTweets();
+    }
+
     showMenuBarHandler();
     window.addEventListener("resize", showMenuBarHandler);
-  }, [dispatch, showModal, tweetListExplore]);
+  }, [dispatch, showModal, tweetListExplore, searchData]);
 
   const addTweetHandler = async (params) => {
     setLoading(true);
@@ -73,6 +79,18 @@ const Feed = ({ onClickLogout, onShowSidebar }) => {
     }
   };
 
+  const filterData = (searchData) => {
+    const result = tweets.filter((data) => {
+      return data.tweet_body.search(searchData) != -1;
+    });
+    setTweets(result);
+  };
+
+  const handleSortData = async (type) => {
+    const resultSort = await getSortTweet(type);
+    setTweets(resultSort.data);
+  };
+
   return (
     <>
       <ModalEdit
@@ -98,6 +116,19 @@ const Feed = ({ onClickLogout, onShowSidebar }) => {
           </Button>
         </div>
         <TweetBox addTweetHandler={addTweetHandler} />
+        <span
+          onClick={() => handleSortData("ASC")}
+          style={{ cursor: "pointer" }}
+        >
+          sort by ASC
+        </span>
+        <br />
+        <span
+          onClick={() => handleSortData("DESC")}
+          style={{ cursor: "pointer" }}
+        >
+          sort by DESC
+        </span>
         {loading ? (
           <div
             style={{

@@ -11,6 +11,18 @@ export const userLogin = async (body) => {
   }
 };
 
+export const getSortTweet = async (type) => {
+  let body = {
+    type: type,
+  };
+  try {
+    const sortResult = await axios.post(`${REACT_APP_PORT}/tweet/sort`, body);
+    return sortResult;
+  } catch (error) {
+    return error.message;
+  }
+};
+
 export const getUserData = async (id) => {
   try {
     const getUserResult = await axios.get(`${REACT_APP_PORT}/users/${id}`);

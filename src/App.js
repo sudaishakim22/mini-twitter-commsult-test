@@ -17,6 +17,7 @@ function App() {
   const [showAlert, setShowAlert] = useState(false);
   const [showRightPanel, setShowRightPanel] = useState(true);
   const [showSideBar, setShowSideBar] = useState(false);
+  const [search, setSearch] = useState("");
 
   useEffect(() => {
     const userLogin = JSON.parse(localStorage.getItem("userLogin"))
@@ -61,8 +62,11 @@ function App() {
   };
 
   const showSideBarHandler = () => {
-    console.log("show");
     setShowSideBar(!showSideBar);
+  };
+
+  const getDataSearch = (data) => {
+    setSearch(data);
   };
 
   return (
@@ -74,8 +78,9 @@ function App() {
             <Feed
               onClickLogout={logoutHandler}
               onShowSidebar={showSideBarHandler}
+              searchData={search}
             />
-            {showRightPanel && <RightPanel />}
+            {showRightPanel && <RightPanel onSearch={getDataSearch} />}
           </div>
         ) : (
           <Redirect to="/" />

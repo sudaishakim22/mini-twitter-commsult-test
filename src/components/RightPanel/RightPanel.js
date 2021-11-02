@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import classes from "./RightPanel.module.css";
 import SearchIcon from "@mui/icons-material/Search";
 import SettingsIcon from "@mui/icons-material/Settings";
@@ -49,12 +49,21 @@ const TrendingList = ({ trend, title, tweets }) => {
   );
 };
 
-const RightPanel = () => {
+const RightPanel = ({ onSearch }) => {
+  const handleSearch = (e) => {
+    let search = e.target.value.toLowerCase();
+    onSearch(search);
+  };
+
   return (
     <div className={classes.rightPanel}>
       <div className={classes.rightPanel__input}>
         <SearchIcon className={classes.rightPanel__searchIcon} />
-        <input type="text" placeholder="Search Twitter" />
+        <input
+          type="text"
+          placeholder="Search Twitter"
+          onChange={handleSearch}
+        />
       </div>
       <div className={classes.trendForYou}>
         <div style={{ display: "flex", justifyContent: "space-between" }}>
